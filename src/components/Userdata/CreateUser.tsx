@@ -1,7 +1,7 @@
 "use client";
 
 const CreateUser = () => {
-  return <div>Enter</div>;
+  return <form>Enter</form>;
 };
 
 export default CreateUser;
