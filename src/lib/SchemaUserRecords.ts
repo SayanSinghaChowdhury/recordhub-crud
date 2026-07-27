@@ -12,7 +12,9 @@ export const recordSchema = z.object({
     .length(13, { error: "fill your mobile number" })
     .startsWith("+91"),
 
-  gender: z.enum(["Male", "Female", "Other"], { error: "Select your gender" }),
+  gender: z.enum(["Male", "Female", "Others"], {
+    error: "Select your gender",
+  }),
 
   address: z
     .string({ error: "Fill your Adress " })

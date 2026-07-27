@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/shadcnui/card";
+import { Card, CardHeader, CardTitle } from "@/components/shadcnui/card";
 import CreateUser from "@/components/Userdata/CreateUser";
 import { Metadata } from "next";
 
@@ -15,17 +10,16 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <section className="grid h-dvh place-items-center">
-      <Card className="grid w-sm place-items-center gap-4">
+      <Card className="grid w-sm place-items-center gap-4 bg-neutral-200 shadow-xl">
         <CardHeader className="w-full">
-          <CardTitle className="text-center text-xl">
-            Create User Records
+          <CardTitle className="text-center font-mono text-2xl font-semibold text-zinc-400 font-stretch-50%">
+            Create User Record
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          {/* Componet Call */}
 
-          <CreateUser />
-        </CardContent>
+        {/* Componet Call */}
+
+        <CreateUser />
       </Card>
     </section>
   );
