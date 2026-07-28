@@ -1,8 +1,11 @@
 "use client";
 
 import { recordSchema } from "@/lib/SchemaUserRecords";
+import createAction from "@/server/createAction";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { CardContent, CardFooter } from "../shadcnui/card";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
@@ -18,9 +21,13 @@ import {
 import { Textarea } from "../shadcnui/textarea";
 
 const CreateUser = () => {
+  // for dismiss
+  const [clear, setClear] = useState(false);
+
   const {
     handleSubmit,
     control,
+    reset,
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(recordSchema),
@@ -30,18 +37,34 @@ const CreateUser = () => {
       email: "",
       phone: "",
       address: "",
-      gender: undefined,
+      gender: "",
     },
   });
 
   const CreateUserHandeler = async (creteData: recordSchema) => {
-    await new Promise((t) => {
-      setTimeout(t, 1200);
-    });
+    const { issuccess, messege } = await createAction(creteData);
 
-    console.log(creteData);
+    await new Promise((t) => {
+      setTimeout(t, 1000);
+    });
+    reset();
+
+    if (issuccess) {
+      toast.success(messege);
+    } else {
+      toast.dismiss(messege);
+    }
   };
 
+  const HandleDismiss = async () => {
+    setClear(true);
+    await new Promise((r) => {
+      setTimeout(r, 500);
+    });
+    setClear(false);
+
+    reset();
+  };
   return (
     <form
       onSubmit={handleSubmit(CreateUserHandeler)}
@@ -201,8 +224,8 @@ const CreateUser = () => {
       <CardFooter className="grid grid-cols-2 gap-4">
         <Button
           type="button"
-          // onClick={handleDismiss}
-          // disabled={submitting}
+          onClick={HandleDismiss}
+          disabled={isSubmitting}
           className="flex-1 rounded-full bg-red-300 font-bold text-white hover:bg-red-400">
           Dismiss
         </Button>
