@@ -1,6 +1,7 @@
 "use client";
 
 import { UserRecord } from "@generated/prisma/client";
+import { useState } from "react";
 import { Badge } from "../shadcnui/badge";
 import { Button } from "../shadcnui/button";
 import {
@@ -19,6 +20,15 @@ type UserRecordType = {
 const UserRecords = ({
   createDataShow: { fullName, address, gender, email, phone },
 }: UserRecordType) => {
+  const [clear, setClear] = useState(false);
+
+  const HandleDismiss = async () => {
+    setClear(true);
+    await new Promise((r) => {
+      setTimeout(r, 500);
+    });
+    setClear(false);
+  };
   return (
     <Card className="grid w-sm place-items-center gap-4 bg-neutral-200 shadow-xl">
       <CardHeader className="grid w-full place-items-center">

@@ -38,7 +38,7 @@ const CreateUser = () => {
     defaultValues: {
       fullName: "",
       email: "",
-      phone: "",
+      phone: undefined,
       address: "",
       gender: "",
     },
@@ -184,9 +184,18 @@ const CreateUser = () => {
                 {...field}
                 id={field.name}
                 type="tel"
+                inputMode="numeric"
                 placeholder="Enter your Ph Number"
-                autoComplete="tel"
+                autoComplete="cc-number"
                 aria-invalid={fieldState.invalid}
+
+                // onChange={(e) => {
+                //   const value = e.target.value;
+
+                //   field.onChange(
+                //     value === "" ? undefined : parseInt(value, 13),
+                //   );
+                // }}
               />
 
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
