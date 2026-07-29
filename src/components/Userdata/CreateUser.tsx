@@ -54,11 +54,11 @@ const CreateUser = () => {
 
     if (issuccess) {
       toast.success(messege);
+
+      push("/");
     } else {
       toast.dismiss(messege);
     }
-
-    push("/");
   };
 
   const HandleDismiss = async () => {
@@ -185,17 +185,15 @@ const CreateUser = () => {
                 id={field.name}
                 type="tel"
                 inputMode="numeric"
-                placeholder="Enter your Ph Number"
+                maxLength={10}
+                placeholder="+91 XXXXXXXXXX"
                 autoComplete="cc-number"
                 aria-invalid={fieldState.invalid}
 
-                // onChange={(e) => {
-                //   const value = e.target.value;
-
-                //   field.onChange(
-                //     value === "" ? undefined : parseInt(value, 13),
-                //   );
-                // }}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  field.onChange(value);
+                }}
               />
 
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
