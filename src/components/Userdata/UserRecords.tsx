@@ -1,7 +1,7 @@
 "use client";
 
 import { UserRecord } from "@generated/prisma/client";
-import { PenBoxIcon, Trash2Icon } from "lucide-react";
+import { PenBoxIcon } from "lucide-react";
 import { Badge } from "../shadcnui/badge";
 import { Button } from "../shadcnui/button";
 import {
@@ -12,13 +12,14 @@ import {
   CardHeader,
   CardTitle,
 } from "../shadcnui/card";
+import DeletUser from "./DeletUser";
 
 type UserRecordType = {
   createDataShow: UserRecord;
 };
 
 const UserRecords = ({
-  createDataShow: { fullName, address, gender, email, phone },
+  createDataShow: { fullName, address, gender, email, phone, id },
 }: UserRecordType) => {
   return (
     <Card className="grid w-sm place-items-center gap-4 bg-neutral-200 shadow-xl">
@@ -52,12 +53,8 @@ const UserRecords = ({
       </CardContent>
 
       <CardFooter className="grid w-full grid-cols-2 gap-4 text-stone-500">
-        <Button
-          type="button"
+        <DeletUser dAction={id} />
 
-          className="flex-1 rounded-xl bg-red-300 font-bold text-white hover:bg-red-400">
-          Delete <Trash2Icon />
-        </Button>
         <Button
           type="submit"
           // disabled={isSubmitting}

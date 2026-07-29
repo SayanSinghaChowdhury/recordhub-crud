@@ -1,6 +1,7 @@
 import UserRecords from "@/components/Userdata/UserRecords";
 import prisma from "@/lib/database/dbClient";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "User Records Reding Zone",
@@ -10,10 +11,16 @@ export const metadata: Metadata = {
 const page = async () => {
   const userAllRecord = await prisma.userRecord.findMany();
 
+  // for no records
+
   if (userAllRecord.length === 0) {
     return (
-      <section>
-        <h1>No Record</h1>
+      <section className="grid h-dvh place-items-center">
+        <Link
+          href={"/createUser"}
+          className="font-mono text-2xl font-semibold">
+          No Record 🐸
+        </Link>
       </section>
     );
   }
