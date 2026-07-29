@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardTitle } from "@/components/shadcnui/card";
 import UserRecords from "@/components/Userdata/UserRecords";
+import prisma from "@/lib/database/dbClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,20 +7,26 @@ export const metadata: Metadata = {
   description: "User Records Reding Zone||Read page",
 };
 
-const page = () => {
+const page = async () => {
+  const userAllRecord = await prisma.userRecord.findMany();
+
+  if (userAllRecord.length === 0) {
+    return (
+      <section>
+        <h1>No Record</h1>
+      </section>
+    );
+  }
+
   return (
-    <section className="grid place-items-center py-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <Card className="grid w-sm place-items-center gap-4 bg-neutral-200 shadow-xl">
-        <CardHeader className="w-full">
-          <CardTitle className="text-center font-mono text-2xl font-semibold text-zinc-400 font-stretch-50%">
-            User Record
-          </CardTitle>
-        </CardHeader>
-
-        {/* Componet Call */}
-
-        <UserRecords />
-      </Card>
+    <section className="grid grid-cols-1 place-items-center gap-30 pt-24 pb-14 md:grid-cols-2 lg:grid-cols-3">
+      {/* Components Call */}
+      {userAllRecord.map((cdata) => (
+        <UserRecords
+          key={cdata.id}
+          createDataShow={cdata}
+        />
+      ))}
     </section>
   );
 };

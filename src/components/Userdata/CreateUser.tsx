@@ -3,6 +3,7 @@
 import { recordSchema } from "@/lib/SchemaUserRecords";
 import createAction from "@/server/createAction";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -23,6 +24,8 @@ import { Textarea } from "../shadcnui/textarea";
 const CreateUser = () => {
   // for dismiss
   const [clear, setClear] = useState(false);
+
+  const { push } = useRouter();
 
   const {
     handleSubmit,
@@ -54,6 +57,8 @@ const CreateUser = () => {
     } else {
       toast.dismiss(messege);
     }
+
+    push("/");
   };
 
   const HandleDismiss = async () => {
