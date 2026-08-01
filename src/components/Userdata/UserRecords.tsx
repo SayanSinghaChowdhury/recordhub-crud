@@ -2,8 +2,9 @@
 
 import { UserRecord } from "@generated/prisma/client";
 import { PenBoxIcon } from "lucide-react";
+import Link from "next/link";
 import { Badge } from "../shadcnui/badge";
-import { Button } from "../shadcnui/button";
+import { Button, buttonVariants } from "../shadcnui/button";
 import {
   Card,
   CardContent,
@@ -45,7 +46,7 @@ const UserRecords = ({
 
       <CardContent className="grid place-items-baseline">
         <div className="w-xs rounded-lg px-2 py-3 text-center wrap-break-word text-stone-500 font-stretch-50%">
-          {phone}
+          <span>Ph: {phone}</span>
         </div>
         <p className="w-xs rounded-lg bg-gray-400/10 px-7 py-7 wrap-break-word text-stone-500 font-stretch-50%">
           {address}
@@ -55,15 +56,26 @@ const UserRecords = ({
       <CardFooter className="grid w-full grid-cols-2 gap-4 text-stone-500">
         <DeletUser dAction={id} />
 
-        <Button
+        <Link
+          href={`/${id}`}
           type="submit"
           // disabled={isSubmitting}
-          className="flex-1 rounded-xl bg-green-300 font-bold text-white hover:bg-green-400">
+          className={buttonVariants({
+            size: "lg",
+            className: "w-full bg-green-300 font-bold text-white",
+          })}>
           Update <PenBoxIcon />
-        </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
 };
 
 export default UserRecords;
+
+<Button
+  type="submit"
+  // disabled={isSubmitting}
+  className="flex-1 rounded-xl">
+  Update <PenBoxIcon />
+</Button>;

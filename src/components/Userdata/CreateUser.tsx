@@ -38,7 +38,7 @@ const CreateUser = () => {
     defaultValues: {
       fullName: "",
       email: "",
-      phone: undefined,
+      phone: "+91",
       address: "",
       gender: "",
     },
@@ -54,11 +54,10 @@ const CreateUser = () => {
 
     if (issuccess) {
       toast.success(messege);
-
-      push("/");
     } else {
       toast.dismiss(messege);
     }
+    push("/");
   };
 
   const HandleDismiss = async () => {
@@ -86,10 +85,10 @@ const CreateUser = () => {
               <FieldLabel
                 className="font-semibold text-neutral-700"
                 htmlFor={field.name}>
-                User Name :
+                Full Name :
               </FieldLabel>
               <Input
-                className="bg-project text-project bg-neutral-400/70 text-neutral-900 placeholder-neutral-700/60 focus-visible:ring-neutral-500"
+                className="text-project"
                 {...field}
                 id={field.name}
                 type="text"
@@ -116,7 +115,7 @@ const CreateUser = () => {
                 Email :
               </FieldLabel>
               <Input
-                className="bg-project text-project bg-neutral-400/70 text-neutral-900 placeholder-neutral-700/60"
+                className="text-project"
                 {...field}
                 id={field.name}
                 type="text"
@@ -149,13 +148,11 @@ const CreateUser = () => {
                 <SelectTrigger
                   id={field.name}
                   aria-invalid={fieldState.invalid}
-                  className={
-                    "w-full bg-neutral-400/70 text-neutral-900 placeholder-neutral-700/60"
-                  }>
+                  className={"w-full"}>
                   <SelectValue placeholder="Genger" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup className="h-auto w-full bg-gray-400">
+                  <SelectGroup className="text-project h-auto w-full">
                     <SelectItem value="Male">Male</SelectItem>
                     <SelectItem value="Female">Female</SelectItem>
                     <SelectItem value="Others">Others</SelectItem>
@@ -168,7 +165,6 @@ const CreateUser = () => {
           )}
         />
         {/* Ph Number */}
-
         <Controller
           name="phone"
           control={control}
@@ -177,23 +173,16 @@ const CreateUser = () => {
               <FieldLabel
                 className="font-semibold text-neutral-700"
                 htmlFor={field.name}>
-                Phone Number :
+                Phone number
               </FieldLabel>
               <Input
-                className="bg-neutral-400/70 text-neutral-900 placeholder-neutral-700/60"
+                className="text-project"
                 {...field}
                 id={field.name}
-                type="tel"
-                inputMode="numeric"
-                maxLength={10}
-                placeholder="+91 XXXXXXXXXX"
-                autoComplete="cc-number"
+                type="text"
+                placeholder="Enter your Number"
+                autoComplete="tel"
                 aria-invalid={fieldState.invalid}
-
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, "");
-                  field.onChange(value);
-                }}
               />
 
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -215,12 +204,13 @@ const CreateUser = () => {
               </FieldLabel>
 
               <Textarea
-                className="bg-neutral-400/70 text-neutral-900 placeholder-neutral-700/60"
+                className="text-project"
                 {...field}
                 id={field.name}
                 aria-invalid={fieldState.invalid}
                 autoComplete="address-level2"
-                placeholder="Enter your Adress "></Textarea>
+                placeholder="Enter your Adress "
+              />
 
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 

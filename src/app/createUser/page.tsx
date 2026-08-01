@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <section className="grid h-dvh place-items-center">
-      <Card className="grid w-sm place-items-center gap-4 bg-neutral-200 shadow-xl">
+      <Card className="grid w-sm place-items-center gap-4 shadow-xl">
         <CardHeader className="w-full">
           <CardTitle className="text-center font-mono text-2xl font-semibold text-zinc-400 font-stretch-50%">
             Create User Record

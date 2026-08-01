@@ -9,11 +9,8 @@ export const recordSchema = z.object({
 
   phone: z
     .string({ error: "fill your mobile number with country Code" })
-    .min(10, { error: "Phone number must be 10 digits" })
-    .max(10, { error: "Phone number must be 10 digits" })
-    .regex(/^\d{10}$/, "Phone number must be exactly 10 digits"),
-
-  // .startsWith("+91");
+    .length(13, { error: "13 characyter Use" })
+    .startsWith("+91", { error: "+91 For Country Code" }),
 
   gender: z.string({
     error: "Select your gender",
