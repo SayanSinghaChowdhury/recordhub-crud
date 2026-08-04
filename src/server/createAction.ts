@@ -1,10 +1,10 @@
 "use server";
 
 import prisma from "@/lib/database/dbClient";
-import { recordSchema } from "@/lib/SchemaUserRecords";
+import { recordSchemaType } from "@/lib/SchemaUserRecords";
 import { revalidatePath } from "next/cache";
 
-const createAction = async (creteData: recordSchema) => {
+const createAction = async (creteData: recordSchemaType) => {
   try {
     await prisma.userRecord.create({
       data: creteData,

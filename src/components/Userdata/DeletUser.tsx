@@ -25,7 +25,6 @@ const DeletUser = ({ dAction }: deletRecord) => {
     }
 
     // server to client
-    await deleteAction(dAction);
 
     await new Promise((r) => {
       setTimeout(r, 500);

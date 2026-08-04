@@ -1,10 +1,10 @@
 "use server";
 
 import prisma from "@/lib/database/dbClient";
-import { recordSchema } from "@/lib/SchemaUserRecords";
+import { recordSchemaType } from "@/lib/SchemaUserRecords";
 import { revalidatePath } from "next/cache";
 
-const updateAction = async (id: string, newRecord: recordSchema) => {
+const updateAction = async (id: string, newRecord: recordSchemaType) => {
   try {
     await prisma.userRecord.update({
       where: { id },
@@ -15,14 +15,14 @@ const updateAction = async (id: string, newRecord: recordSchema) => {
 
     return {
       issuccess: true,
-      messege: "Record update successfully",
+      messege: "Record update successfully 🚀",
     };
   } catch (error) {
     console.log(error);
 
     return {
-      issuccess: true,
-      messege: "Record Update not successfully",
+      issuccess: false,
+      message: "User Update Failed 🦖",
     };
   }
 };

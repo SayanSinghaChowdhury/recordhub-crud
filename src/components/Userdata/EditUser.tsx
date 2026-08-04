@@ -1,9 +1,10 @@
 "use client";
 
-import { recordSchema } from "@/lib/SchemaUserRecords";
+import { recordSchema, recordSchemaType } from "@/lib/SchemaUserRecords";
 import updateAction from "@/server/updateAction";
 import { UserRecord } from "@generated/prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PaperBagIcon, SendIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -12,6 +13,11 @@ import { Button } from "../shadcnui/button";
 import { CardContent, CardFooter } from "../shadcnui/card";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../shadcnui/input-group";
 import {
   Select,
   SelectContent,
@@ -41,19 +47,18 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
     defaultValues: {
       fullName: "",
       email: "",
-      phone: "+91",
+      phone: "",
       address: "",
       gender: "",
     },
   });
 
-  const CreateUserHandeler = async (newRecord: UserRecord) => {
+  const EditUserHandeler = async (newRecord: recordSchemaType) => {
     const { issuccess, messege } = await updateAction(id, newRecord);
 
     await new Promise((t) => {
       setTimeout(t, 1000);
     });
-    reset();
 
     if (issuccess) {
       toast.success(messege);
@@ -76,7 +81,7 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
 
   return (
     <form
-      onSubmit={handleSubmit(CreateUserHandeler)}
+      onSubmit={handleSubmit(EditUserHandeler)}
       className="w-full space-y-7"
       noValidate>
       {/* Full Name */}
@@ -88,7 +93,7 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel
-                className="font-semibold text-neutral-700"
+                className="font-semibold"
                 htmlFor={field.name}>
                 Full Name :
               </FieldLabel>
@@ -115,7 +120,7 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel
-                className="font-semibold text-neutral-700"
+                className="font-semibold"
                 htmlFor={field.name}>
                 Email :
               </FieldLabel>
@@ -141,11 +146,7 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
           control={control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel
-                className="font-semibold text-neutral-700"
-                htmlFor={field.name}>
-                Gender :
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Gender :</FieldLabel>
 
               <Select
                 value={field.value}
@@ -174,22 +175,22 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
           name="phone"
           control={control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel
-                className="font-semibold text-neutral-700"
-                htmlFor={field.name}>
-                Phone number
-              </FieldLabel>
-              <Input
-                className="text-project"
-                {...field}
-                id={field.name}
-                type="text"
-                placeholder="Enter your Number"
-                autoComplete="tel"
-                aria-invalid={fieldState.invalid}
-              />
-
+            <Field
+              data-invalid={fieldState.invalid}
+              className="max-w-sm">
+              <FieldLabel htmlFor={field.name}>Phone Number :</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  className="text-project"
+                  {...field}
+                  id={field.name}
+                  type="text"
+                  placeholder={field.name}
+                  autoComplete="tel"
+                  aria-invalid={fieldState.invalid}
+                />
+                <InputGroupAddon align="inline-start">+91</InputGroupAddon>
+              </InputGroup>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -203,7 +204,7 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel
-                className="font-semibold text-neutral-700"
+                className="font-semibold"
                 htmlFor={field.name}>
                 User Adress :
               </FieldLabel>
@@ -233,14 +234,17 @@ const EditUser = ({ UserData: { id } }: deleteRecord) => {
           type="button"
           onClick={HandleDismiss}
           disabled={isSubmitting}
-          className="flex-1 rounded-full bg-red-300 font-bold text-white hover:bg-red-400">
-          Dismiss
+          variant={"destructive"}
+          className="flex-1 rounded-full">
+          Dismiss <PaperBagIcon />
         </Button>
+
         <Button
           type="submit"
+          variant={"secondary"}
           disabled={isSubmitting}
-          className="flex-1 rounded-full bg-green-300 font-bold text-white hover:bg-green-400">
-          Submit
+          className="flex-1 rounded-full">
+          Submit <SendIcon />
         </Button>
       </CardFooter>
     </form>
